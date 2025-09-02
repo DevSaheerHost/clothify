@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "name": "Red T-Shirt",
+    "description": "A stylish red t-shirt made from 100% cotton.",
+    "price": 19.99,
+    "image": "https://stagmenfashion.com/media/web/products/DSC09249_oROTvE3.jpg.672x1200_q85_crop.jpg",
+    "category": "T-Shirts"
+  },
+  {
+    "id": 2,
+    "name": "Blue Jeans",
+    "description": "Comfortable blue jeans with a modern fit.",
+    "price": 49.99,
+    "image": "https://stagmenfashion.com/media/web/products/ABD58D2D-5E9A-4373-8AD1-5F167E7FE05A.jpeg.672x1200_q85_crop.jpg",
+    "category": "Jeans"
+  },
+  {
+    "id": 3,
+    "name": "Black Hoodie",
+    "description": "A warm black hoodie perfect for casual wear.",
+    "price": 39.99,
+    "image": "https://stagmenfashion.com/media/web/products/955D0C4A-C562-44B5-B83D-2269C0F5AEC4.jpeg.672x1200_q85_crop.jpg",
+    "category": "Hoodies"
+  },
+  {
+    "id": 4,
+    "name": "White Sneakers",
+    "description": "Classic white sneakers that go with any outfit.",
+    "price": 59.99,
+    "image": "https://stagmenfashion.com/media/web/products/B4F02FF2-F8B6-4659-8C0E-2E9217A34E84.jpeg.672x1200_q85_crop.jpg",
+    "category": "Footwear"
+  },
+  {
+    "id": 5,
+    "name": "Green Cap",
+    "description": "A trendy green cap to complete your look.",
+    "price": 14.99,
+    "image": "https://stagmenfashion.com/media/web/products/8E2A86A8-C1C4-46BF-857A-CE45DD33BA80.jpeg.672x1200_q85_crop.jpg",
+    "category": "Accessories"
+  },
+  {
+    "id": 6,
+    "name": "Yellow Dress",
+    "description": "A bright yellow dress for sunny days.",
+    "price": 29.99,
+    "image": "https://stagmenfashion.com/media/web/products/93AC298E-838A-464B-BF9A-6CE5B0C4183D.jpeg.672x1200_q85_crop.jpg",
+    "category": "Dresses"
+  },
+  {
+    "id": 7,
+    "name": "Brown Belt",
+    "description": "A durable brown leather belt.",
+    "price": 24.99,
+    "image": "https://stagmenfashion.com/media/web/products/0EAD2FE9-303A-4BF1-A043-1E34933042FC.jpeg.672x1200_q85_crop.jpg",
+    "category": "Accessories"
+  },
+  {
+    "id": 8,
+    "name": "Gray Sweater",
+    "description": "A cozy gray sweater for chilly days.",
+    "price": 34.99,
+    "image": "https://stagmenfashion.com/media/web/products/CB9E6C09-F123-4A03-9461-16684D2DD877.jpeg.672x1200_q85_crop.jpg",
+    "category": "Sweaters"
+  }
+]
+

@@ -1,0 +1,144 @@
+<!-- <link rel="stylesheet" href="./prodducts.css"/> -->
+<section class="products">
+  <h3>Products</h3>
+
+  <!-- div with total items and filter btn with icon -->
+  <div class="product-header">
+    <div class="total-items">8 items found</div>
+    <button class="filter-btn" onclick="document.querySelector('.filter-container').classList.toggle('show')">
+      <span class="material-icons">filter_list</span>
+      Filter
+    </button>
+  </div>
+
+  <div class="filter-container">
+  
+    <h4>Filters</h4>
+    <div class="filter-section">
+      <h5>Category</h5>
+      <div class="filter-option">
+        <input
+          type="checkbox"
+          id="oversized-jeans"
+          name="category"
+          value="oversized-jeans"
+        />
+        <label for="oversized-jeans">Oversized Jeans</label>
+      </div>
+      <div class="filter-option">
+        <input
+          type="checkbox"
+          id="carpenter-jeans"
+          name="category"
+          value="carpenter-jeans"
+        />
+        <label for="carpenter-jeans">Carpenter Jeans</label>
+      </div>
+      <div class="filter-option">
+        <input
+          type="checkbox"
+          id="scratched-jeans"
+          name="category"
+          value="scratched-jeans"
+        />
+        <label for="scratched-jeans">Scratched Jeans</label>
+      </div>
+      <div class="filter-option">
+        <input type="checkbox" id="derbys" name="category" value="derbys" />
+        <label for="derbys">Derbys</label>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <h5>Price Range</h5>
+      <div class="filter-option">
+        <input type="radio" id="under-50" name="price" value="under-50" />
+        <label for="under-50">Under $50</label>
+      </div>
+      <div class="filter-option">
+        <input type="radio" id="50-100" name="price" value="50-100" />
+        <label for="50-100">$50 - $100</label>
+      </div>
+      <div class="filter-option">
+        <input type="radio" id="100-200" name="price" value="100-200" />
+        <label for="100-200">$100 - $200</label>
+      </div>
+      <div class="filter-option">
+        <input type="radio" id="above-200" name="price" value="above-200" />
+        <label for="above-200">Above $200</label>
+      </div>
+    </div>
+    <button class="apply-filters-btn">Apply Filters</button>
+    <button class="clear-filters-btn">Clear Filters</button>
+  </div>
+
+  
+
+  <ul class="product-list">
+    <li class="product-item">
+      <img
+        src="https://stagmenfashion.com/media/web/products/DSC09249_oROTvE3.jpg.672x1200_q85_crop.jpg"
+        alt="Product 1"
+      />
+      <h3>Product 1</h3>
+      <p class="price">$10.00</p>
+      <button onclick="location.href='product.html?id=1'">View Details</button>
+    </li>
+    <li class="product-item">
+      <img
+        src="https://stagmenfashion.com/media/web/products/DSC09249_oROTvE3.jpg.672x1200_q85_crop.jpg"
+        alt="Product 1"
+      />
+      <h3>Product 1</h3>
+      <p class="price">$10.00</p>
+      <button onclick="location.href='product.html?id=1'">View Details</button>
+    </li>
+    <li class="product-item">
+      <img
+        src="https://stagmenfashion.com/media/web/products/DSC09249_oROTvE3.jpg.672x1200_q85_crop.jpg"
+        alt="Product 1"
+      />
+      <h3>Product 1</h3>
+      <p class="price">$10.00</p>
+      <button onclick="location.href='product.html?id=1'">View Details</button>
+    </li>
+    <li class="product-item">
+      <img
+        src="https://stagmenfashion.com/media/web/products/DSC09249_oROTvE3.jpg.672x1200_q85_crop.jpg"
+        alt="Product 1"
+      />
+      <h3>Product 1</h3>
+      <p class="price">$10.00</p>
+      <button onclick="location.href='product.html?id=1'">View Details</button>
+    </li>
+
+    <li class="product-item">
+      <img
+        src="https://stagmenfashion.com/media/web/products/DSC09249_oROTvE3.jpg.672x1200_q85_crop.jpg"
+        alt="Product 1"
+      />
+      <h3>Product 1</h3>
+      <p class="price">$10.00</p>
+      <button onclick="location.href='product.html?id=1'">View Details</button>
+    </li>
+    <li class="product-item">
+      <img
+        src="https://stagmenfashion.com/media/web/products/DSC09249_oROTvE3.jpg.672x1200_q85_crop.jpg"
+        alt="Product 1"
+      />
+      <h3>Product 1</h3>
+      <p class="price">$10.00</p>
+      <button onclick="location.href='product.html?id=1'">View Details</button>
+    </li>
+    <li class="product-item">
+      <img
+        src="https://stagmenfashion.com/media/web/products/DSC09249_oROTvE3.jpg.672x1200_q85_crop.jpg"
+        alt="Product 1"
+      />
+      <h3>Product 1</h3>
+      <p class="price">$10.00</p>
+      <button onclick="location.href='product.html?id=1'">View Details</button>
+    </li>
+  </ul>
+</section>
+
