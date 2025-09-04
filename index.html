@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>E-Commerce`</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./style.css" />
 
     <link
       rel="stylesheet"
@@ -17,7 +17,7 @@
         <h1>Clothify</h1>
       </div>
       <nav>
-        <a href="/home" data-link>
+        <a href="/home" data-link data-page="home">
           <!-- Home icon -->
           <svg
             class="icon"
@@ -26,10 +26,10 @@
           >
             <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
           </svg>
-          <p>Home</p>
+          <p data-page="home">Home</p>
         </a>
 
-        <a href="/products" data-link>
+        <a href="/products" data-link data-page="products">
           <!-- Products / Shopping Cart icon -->
           <svg
             class="icon"
@@ -49,7 +49,7 @@
                1.76-.4-.73z"
             />
           </svg>
-          <p>Products</p>
+          <p data-page="products">Products</p>
         </a>
 
         <a href="/about" data-link>
@@ -66,7 +66,7 @@
                15h-1v-6h2v6h-1zm0-8h-1V7h2v2h-1z"
             />
           </svg>
-          <p>About</p>
+          <p data-page="about">About</p>
         </a>
 
         <a href="/account" data-link>
@@ -82,14 +82,16 @@
                2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"
             />
           </svg>
-          <p>Account</p>
+          <p data-page="account">Account</p>
         </a>
       </nav>
 
       <!-- cart icon -->
       <a href="/cart" class="cart-icon" data-link>
-        <span class="material-symbols-outlined"> shopping_cart </span>
-        <span class="cart-count" id="cart-count">3</span>
+        <span class="material-symbols-outlined" data-page="cart">
+          shopping_cart
+        </span>
+        <span class="cart-count" id="cart-count" data-page="cart">0</span>
       </a>
     </header>
 

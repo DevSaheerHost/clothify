@@ -1,13 +1,17 @@
 // script.js
 const app = document.getElementById("app");
 
+// DOM helpers
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
 
-// Fetch products from local JSON
+// Cart array
+let cart = [];
+
+// Fetch products from local JSON (relative path for GitHub Pages)
 const fetchProducts = async () => {
   try {
-    const res = await fetch("/data/products.json");
+    const res = await fetch("./data/products.json");
     if (!res.ok) throw new Error("Failed to fetch products");
     return await res.json();
   } catch (err) {
@@ -15,14 +19,14 @@ const fetchProducts = async () => {
     return [];
   }
 };
-// let totalCount = 0;
+console.log(fetchProducts());
 
-
-
-// Render products to the DOM
+// Render products list
 const renderProducts = (products) => {
+  console.log("got products:", products);
+  
   const productsContainer = $(".product-list");
-  if (!productsContainer) return; // Safety check
+  if (!productsContainer) return;
   productsContainer.innerHTML = "";
 
   products.forEach((product) => {
@@ -32,86 +36,17 @@ const renderProducts = (products) => {
       <img src="${product.image}" alt="${product.name}" class="product-image" />
       <h4 class="product-name">${product.name}</h4>
       <p class="product-price">$${product.price.toFixed(2)}</p>
-      <button class="add-to-cart-btn" data-id="${
-        product.id
-      }">Add to Cart</button>
+      <button class="add-to-cart-btn" data-id="${product.id}">Add to Cart</button>
     `;
     productsContainer.appendChild(productCard);
-    // totalCount++;
   });
 
-  // Update total items
   const totalItems = $(".product-header .total-items");
   if (totalItems) totalItems.textContent = `${products.length} items found`;
 };
 
-// SPA Page Loader
-async function loadPage(page) {
-  try {
-    const res = await fetch(`/pages/${page}.html`);
-    if (!res.ok) throw new Error("Page not found");
-    app.innerHTML = await res.text();
-
-    // If products page, render products after injection
-    if (page === "products") {
-      const products = await fetchProducts();
-      renderProducts(products);
-    }
-  } catch (err) {
-    console.warn(`${page} not found, redirecting to home.`);
-    history.replaceState(null, null, "/home");
-    loadPage("home");
-  }
-}
-
-// SPA navigation
-function navigateTo(url) {
-  history.pushState(null, null, url);
-  router();
-}
-
-// Router
-function router() {
-  const path = location.pathname.replace("/", "") || "home";
-  loadPage(path);
-}
-
-// Link interception
-document.body.addEventListener("click", (e) => {
-  const link = e.target.closest("[data-link]");
-  if (link) {
-    e.preventDefault();
-    navigateTo(link.href);
-  }
-});
-
-// Back/forward support
-window.addEventListener("popstate", router);
-
-// Initial load
-document.addEventListener("DOMContentLoaded", router);
-
-let cartCount = 0;
-  $("#cart-count").textContent = cartCount;
-
-// Event delegation for dynamically created add-to-cart buttons
-document.body.addEventListener("click", (e) => {
-  const btn = e.target.closest(".add-to-cart-btn");
-  if (!btn) return;
-  const id = btn.dataset.id;
-  // Here you would typically update the cart state
-  cartCount++;
-  $("#cart-count").textContent = cartCount;
-  console.log(`Added product ${id} to cart`);
-});
-
-
-
-
-let cart = []; // store cart items
-
 // Add product to cart
-function addToCart(product) {
+const addToCart = (product) => {
   const existing = cart.find((p) => p.id === product.id);
   if (existing) {
     existing.quantity++;
@@ -120,22 +55,22 @@ function addToCart(product) {
   }
   renderCart();
   updateCartCount();
-}
+};
 
-// Update cart item count badge
-function updateCartCount() {
+// Update cart badge count
+const updateCartCount = () => {
   const count = cart.reduce((acc, item) => acc + item.quantity, 0);
   const badge = $("#cart-count");
   if (badge) badge.textContent = count;
-}
+};
 
-// Render cart page (mobile version)
-function renderCart() {
+// Render cart page
+const renderCart = () => {
   const cartList = $(".cart-list");
   const summary = $(".cart-summary");
   if (!cartList || !summary) return;
 
-  cartList.innerHTML = ""; // clear previous items
+  cartList.innerHTML = "";
   let totalItems = 0;
   let totalPrice = 0;
 
@@ -162,11 +97,66 @@ function renderCart() {
 
   summary.querySelector("p:nth-child(2)").textContent = `Total Items: ${totalItems}`;
   summary.querySelector("p:nth-child(3)").textContent = `Total Price: $${totalPrice.toFixed(2)}`;
-}
+};
 
-// Event delegation for buttons and inputs
+// Load cart page
+const loadCartPage = () => {
+  renderCart();
+  updateCartCount();
+};
+
+// SPA Page loader
+const loadPage = async (page) => {
+  try {
+    // ✅ base path fix: always relative
+    const res = await fetch(`pages/${page}.html`);
+    if (!res.ok) throw new Error("Page not found");
+    app.innerHTML = await res.text();
+
+    if (page === "products") {
+      console.log("yes page === products o feching");
+      
+      const products = await fetchProducts();
+      renderProducts(products);
+    }
+    if (page === "cart") {
+      loadCartPage();
+    }
+  } catch (err) {
+    console.warn(`${page} not found, redirecting to home.`);
+    history.replaceState(null, null, "/clothify/home");
+    loadPage("home");
+  }
+};
+
+// Router
+const router = () => {
+  // ✅ remove "/clothify/" prefix
+  let path = location.pathname.replace("/clothify", "");
+  if (!path) path = "home"; // default
+  loadPage(path);
+};
+
+// SPA navigation
+const navigateTo = (url) => {
+  history.pushState(null, null, `/clothify${url}`);
+  router();
+};
+
+
+// Event delegation for links, add/remove cart
 document.body.addEventListener("click", (e) => {
-  // Add to cart button
+  const link = e.target.closest("[data-link]");
+  if (link) {
+    e.preventDefault();
+    navigateTo(link.getAttribute("href"));
+    console.log(e.target);
+    
+    const Path = e.target.dataset.page
+    loadPage(Path);
+    
+  }
+
   const addBtn = e.target.closest(".add-to-cart-btn");
   if (addBtn) {
     const id = addBtn.dataset.id;
@@ -176,7 +166,6 @@ document.body.addEventListener("click", (e) => {
     });
   }
 
-  // Remove button
   const removeBtn = e.target.closest(".remove-btn");
   if (removeBtn) {
     const id = removeBtn.dataset.id;
@@ -186,7 +175,7 @@ document.body.addEventListener("click", (e) => {
   }
 });
 
-// Update quantity input in cart
+// Quantity change in cart
 document.body.addEventListener("input", (e) => {
   const input = e.target.closest(".cart-qty");
   if (input) {
@@ -198,53 +187,6 @@ document.body.addEventListener("input", (e) => {
       renderCart();
       updateCartCount();
     }
-  }
-});
-
-// When cart page loads
-function loadCartPage() {
-  renderCart();
-  updateCartCount();
-}
-
-// SPA page loader
-async function loadPage(page) {
-  try {
-    const res = await fetch(`/pages/${page}.html`);
-    if (!res.ok) throw new Error("Page not found");
-    app.innerHTML = await res.text();
-
-    if (page === "products") {
-      const products = await fetchProducts();
-      renderProducts(products);
-    }
-    if (page === "cart") {
-      loadCartPage();
-    }
-  } catch (err) {
-    console.warn(`${page} not found, redirecting to home.`);
-    history.replaceState(null, null, "/home");
-    loadPage("home");
-  }
-}
-
-// SPA navigation helpers
-function navigateTo(url) {
-  history.pushState(null, null, url);
-  router();
-}
-
-function router() {
-  const path = location.pathname.replace("/", "") || "home";
-  loadPage(path);
-}
-
-// Link interception
-document.body.addEventListener("click", (e) => {
-  const link = e.target.closest("[data-link]");
-  if (link) {
-    e.preventDefault();
-    navigateTo(link.href);
   }
 });
 
