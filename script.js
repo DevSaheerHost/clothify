@@ -19,7 +19,7 @@ const fetchProducts = async () => {
     return [];
   }
 };
-console.log(fetchProducts());
+
 
 // Render products list
 const renderProducts = (products) => {
@@ -79,7 +79,7 @@ const renderCart = () => {
     const cartItem = document.createElement("div");
     cartItem.className = "cart-item";
     cartItem.innerHTML = `
-      <img src="${item.image}" alt="${item.name}" />
+      <img src="${item.image}" alt="${item.name}" referrerpolicy="no-referrer" />
       <div class="item-details">
         <h3>${item.name}</h3>
         <p>Price: $${item.price.toFixed(2)}</p>
@@ -109,7 +109,7 @@ const loadCartPage = () => {
 const loadPage = async (page) => {
   try {
     // ✅ base path fix: always relative
-    const res = await fetch(`pages/${page}.html`);
+    const res = await fetch(`pages/${page=='/'?'home':page}.html`);
     if (!res.ok) throw new Error("Page not found");
     app.innerHTML = await res.text();
 
@@ -150,11 +150,10 @@ document.body.addEventListener("click", (e) => {
   if (link) {
     e.preventDefault();
     navigateTo(link.getAttribute("href"));
-    console.log(e.target);
+    
     
     const Path = e.target.dataset.page
     loadPage(Path);
-    
   }
 
   const addBtn = e.target.closest(".add-to-cart-btn");

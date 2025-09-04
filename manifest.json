@@ -1,0 +1,21 @@
+{
+  "name": "Clothify",
+  "short_name": "Clothify",
+  "description": "Your One-Stop E-Commerce Shop for Trendy Apparel",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "./assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/material-icons/cart.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml"
+    }
+  ]
+}
