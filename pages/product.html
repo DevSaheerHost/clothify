@@ -1,0 +1,50 @@
+<main class="over-view">
+    <!-- a detailed page for a single product, that including product image, another images, name, descrioption, price, more details, related products, and many more... -->
+    <div class="product-detail" id="product-detail">
+        <div class="product-images">
+            <div class="main-image">
+            <img
+                src="./assets/sample-product.jpg"
+                alt="Product Image"
+                id="main-product-image"
+            />
+            </div>
+            <div class="thumbnail-images" id="thumbnail-images">
+            <img
+                src="https://stagmenfashion.com/media/web/products/ABD58D2D-5E9A-4373-8AD1-5F167E7FE05A.jpeg.672x1200_q85_crop.jpg"
+                alt="Thumbnail 1"
+                class="thumbnail"
+                onclick="changeImage(this.src)"
+            />
+            <img
+                src="./assets/sample-product2.jpg"
+                alt="Thumbnail 2"
+                class="thumbnail"
+                onclick="changeImage(this.src)"
+            />
+            <img
+                src="./assets/sample-product3.jpg"
+                alt="Thumbnail 3"
+                class="thumbnail"
+                onclick="changeImage(this.src)"
+            />
+            </div>
+        </div>
+        <div class="product-info">
+            <h2 id="product-name">Product Name</h2>
+            <p id="product-description">
+            This is a detailed description of the product. It includes features,
+            specifications, and other relevant information that helps the customer
+            make an informed decision.
+            </p>
+            <p id="product-price">$99.99</p>
+            <button id="add-to-cart-button">Add to Cart</button>
+        </div>
+    </div>
+    <section class="related-products products">
+        <h3>Related Products</h3>
+        <ul class="product-list" id="related-products-list">
+            <!-- Related products will be dynamically inserted here -->
+        </ul>
+    </section>
+</main>

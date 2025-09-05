@@ -5,7 +5,12 @@
     "description": "A stylish red t-shirt made from 100% cotton.",
     "price": 19.99,
     "image": "https://stagmenfashion.com/media/web/products/DSC09249_oROTvE3.jpg.672x1200_q85_crop.jpg",
-    "category": "T-Shirts"
+    "category": "T-Shirts",
+    "thumbImages":[
+      "https://stagmenfashion.com/media/web/products/ABD58D2D-5E9A-4373-8AD1-5F167E7FE05A.jpeg.672x1200_q85_crop.jpg",
+      "https://stagmenfashion.com/media/web/products/955D0C4A-C562-44B5-B83D-2269C0F5AEC4.jpeg.672x1200_q85_crop.jpg",
+      "https://stagmenfashion.com/media/web/products/B4F02FF2-F8B6-4659-8C0E-2E9217A34E84.jpeg.672x1200_q85_crop.jpg"
+    ]
   },
   {
     "id": 2,

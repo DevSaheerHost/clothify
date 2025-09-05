@@ -23,12 +23,16 @@ const fetchProducts = async () => {
   }
 };
 
+const changeImage = src =>{
+  const mainImg = document.getElementById("mainImg");
+  mainImg.src = src;
+}
 
 // Render products list
-const renderProducts = (products) => {
+const renderProducts = (products, container) => {
   console.log("got products:", products);
-  
-  const productsContainer = $(".product-list");
+
+  const productsContainer = $(container);
   if (!productsContainer) return;
   productsContainer.innerHTML = "";
 
@@ -36,10 +40,17 @@ const renderProducts = (products) => {
     const productCard = document.createElement("li");
     productCard.className = "product-item";
     productCard.innerHTML = `
+    <a href="/product?id=${
+      product.id
+    }" data-page="product" data-link class="view-product-link">
+     
       <img src="${product.image}" alt="${product.name}" class="product-image" />
+      </a>
       <h4 class="product-name">${product.name}</h4>
       <p class="product-price">$${product.price.toFixed(2)}</p>
-      <button class="add-to-cart-btn" data-id="${product.id}">Add to Cart</button>
+      <button class="add-to-cart-btn" data-id="${
+        product.id
+      }">Add to Cart</button>
     `;
     productsContainer.appendChild(productCard);
   });
@@ -82,12 +93,20 @@ const renderCart = () => {
     const cartItem = document.createElement("div");
     cartItem.className = "cart-item";
     cartItem.innerHTML = `
-      <img src="${item.image}" alt="${item.name}" referrerpolicy="no-referrer" />
+    <a href="/product?id=${
+      item.id
+    }" data-page="product" data-link class="view-product-link">
+      <img src="${item.image}" alt="${
+      item.name
+    }" referrerpolicy="no-referrer" />
+    </a>
       <div class="item-details">
         <h3>${item.name}</h3>
         <p>Price: $${item.price.toFixed(2)}</p>
         <label for="quantity-${index}">Quantity:</label>
-        <input type="number" id="quantity-${index}" value="${item.quantity}" min="1" data-id="${item.id}" class="cart-qty"/>
+        <input type="number" id="quantity-${index}" value="${
+      item.quantity
+    }" min="1" data-id="${item.id}" class="cart-qty"/>
         <p>Total: $${itemTotal.toFixed(2)}</p>
         <button class="remove-btn" data-id="${item.id}">Remove</button>
       </div>
@@ -98,8 +117,53 @@ const renderCart = () => {
     totalPrice += itemTotal;
   });
 
-  summary.querySelector("p:nth-child(2)").textContent = `Total Items: ${totalItems}`;
-  summary.querySelector("p:nth-child(3)").textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+  summary.querySelector(
+    "p:nth-child(2)"
+  ).textContent = `Total Items: ${totalItems}`;
+  summary.querySelector(
+    "p:nth-child(3)"
+  ).textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+};
+
+// ? Related Products
+
+const renderRelatedProducts = (products, product) => {
+  const relatedProducts = products
+    .filter((p) => p.id != product.id)
+    .slice(0, 4); // Get 4 related products
+
+  console.log("related products:", relatedProducts);
+
+  const relatedProductContainer = $("#related-products-list");
+
+  if (!relatedProductContainer) return;
+
+  relatedProductContainer.innerHTML = "";
+
+  try {
+    relatedProducts.forEach((product) => {
+      console.log(product);
+
+      const productCard = document.createElement("li");
+      productCard.className = "product-item";
+      productCard.innerHTML = `
+    <a href="/product?id=${
+      product.id
+    }" data-page="product" data-link class="view-product-link">
+     
+      <img src="${product.image}" alt="${product.name}" class="product-image" />
+      </a>
+      <h4 class="product-name">${product.name}</h4>
+      <p class="product-price">$${product.price.toFixed(2)}</p>
+      <button class="add-to-cart-btn" data-id="${
+        product.id
+      }">Add to Cart</button>
+    `;
+      relatedProductContainer.appendChild(productCard);
+    });
+  } catch (error) {
+    console.warn(error);
+  }
 };
 
 // Load cart page
@@ -112,18 +176,68 @@ const loadCartPage = () => {
 const loadPage = async (page) => {
   try {
     // ✅ base path fix: always relative
-    const res = await fetch(`pages/${page=='/'?'home':page}.html`);
+    const res = await fetch(`pages/${page == "/" ? "home" : page}.html`);
     if (!res.ok) throw new Error("Page not found");
     App.innerHTML = await res.text();
 
     if (page === "products") {
-      console.log("yes page === products o feching");
-      
       const products = await fetchProducts();
-      renderProducts(products);
+      renderProducts(products, ".product-list");
     }
     if (page === "cart") {
       loadCartPage();
+    }
+    if (page === "product") {
+      const params = new URLSearchParams(location.search);
+      const id = params.get("id");
+      if (id) {
+        const products = await fetchProducts();
+        const product = products.find((p) => p.id == id);
+        if (product) {
+          const productContainer = $(".product-detail");
+          if (productContainer) {
+            productContainer.innerHTML = `
+            <img id="mainImg" src="${product.image}" alt="${
+              product.name
+            }" referrerpolicy="no-referrer" />
+            <div class="thumbnail-images" id="thumbnail-images">
+            ${product.thumbImages?.map(img=>
+              `<img
+                src="${img}"
+                alt="Thumbnail 1"
+                class="thumbnail"
+                onclick="changeImage(this.src)"
+            />`
+            ).join('') || ''}
+            </div>
+            <div class="product-info">
+              <h2>${product.name}</h2>
+              <p class="product-price">$${product.price.toFixed(2)}</p>
+              <p class="product-description">${
+                product.description || "No description available."
+              }</p>
+
+              <div class="product-id">Product ID: ${product.id}</div>
+              <div class="product-category">Category: ${
+                product.category || "N/A"
+              }</div>
+              <div class="btn-wrapper">
+              <button class="add-to-cart-btn" data-id="${
+                product.id
+              }">Add to Cart</button>
+              <button class="buy-now-btn" data-id="${
+                product.id
+              }">Buy Now</button>
+              </div>
+            </div>
+            `;
+          }
+
+          // * related product
+
+          renderRelatedProducts(products, product);
+        }
+      }
     }
   } catch (err) {
     console.warn(`${page} not found, redirecting to home.`);
@@ -133,10 +247,16 @@ const loadPage = async (page) => {
 };
 
 // Router
-const router = () => {
+const router = async () => {
   let path = location.pathname.replace(rootpath, "");
   if (!path || path === "/") path = "home";
   loadPage(path);
+
+  if(location.href.includes("product?id=") && loadPage("product")){
+    const products = await fetchProducts()
+    renderProducts()
+  }
+  
 };
 
 // SPA navigation
@@ -145,16 +265,14 @@ const navigateTo = (url) => {
   router();
 };
 
-
 // Event delegation for links, add/remove cart
 document.body.addEventListener("click", (e) => {
   const link = e.target.closest("[data-link]");
   if (link) {
     e.preventDefault();
     navigateTo(link.getAttribute("href"));
-    
-    
-    const Path = e.target.dataset.page
+
+    const Path = e.target.dataset.page || link.dataset.page;
     loadPage(Path);
   }
 
@@ -164,6 +282,19 @@ document.body.addEventListener("click", (e) => {
     fetchProducts().then((products) => {
       const product = products.find((p) => p.id == id);
       if (product) addToCart(product);
+    });
+  }
+
+  const buyBtn = e.target.closest(".buy-now-btn");
+  if (buyBtn) {
+    const id = buyBtn.dataset.id;
+    fetchProducts().then((products) => {
+      const product = products.find((p) => p.id == id);
+      if (product) {
+        addToCart(product);
+        navigateTo("/cart");
+        loadPage("cart");
+      }
     });
   }
 
@@ -190,6 +321,11 @@ document.body.addEventListener("input", (e) => {
     }
   }
 });
+
+//viewProduct({img:"https://stagmenfashion.com/media/web/products/ABD58D2D-5E9A-4373-8AD1-5F167E7FE05A.jpeg.672x1200_q85_crop.jpg", name: 'White Sneakers', price: 1299, description: "No data", id:"id"})
+
+
+
 
 // Back/forward support
 window.addEventListener("popstate", router);
