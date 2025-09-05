@@ -384,6 +384,38 @@ section.products h3 {
   background-color: #d81b60;
 }
 
+/* Empty cart */
+
+.empty-cart {
+  text-align: center;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.empty-cart h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+.empty-cart p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+.empty-cart .shop-now-btn {
+  padding: 0.5rem 1rem;
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+.empty-cart .shop-now-btn:hover {
+  background-color: #d81b60;
+}
+
 .hidden {
   display: none;
 }

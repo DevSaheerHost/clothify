@@ -88,6 +88,19 @@ const renderCart = () => {
   let totalItems = 0;
   let totalPrice = 0;
 
+  console.log(cart);
+  if (cart.length === 0) {
+    cartList.innerHTML = `
+    <div class="empty-cart">
+      <h2>Your cart is empty</h2>
+      <p>Looks like you haven't added anything to your cart yet.</p>
+      <a href="/products" data-page="products" data-link class="shop-now-btn">Shop Now</a>
+    </div>
+    `;
+    summary.innerHTML = ":(";
+    return;
+  }
+
   cart.forEach((item, index) => {
     const itemTotal = item.price * item.quantity;
     const cartItem = document.createElement("div");
