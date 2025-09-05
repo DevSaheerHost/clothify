@@ -1,5 +1,8 @@
-// script.js
-const app = document.getElementById("app");
+const App = document.getElementById("app");
+
+// Add this block at the top:
+const isVercel = location.hostname === "clothifyn.vercel.app";
+const rootpath = isVercel ? "" : "/clothify";
 
 // DOM helpers
 const $ = (selector) => document.querySelector(selector);
@@ -111,7 +114,7 @@ const loadPage = async (page) => {
     // ✅ base path fix: always relative
     const res = await fetch(`pages/${page=='/'?'home':page}.html`);
     if (!res.ok) throw new Error("Page not found");
-    app.innerHTML = await res.text();
+    App.innerHTML = await res.text();
 
     if (page === "products") {
       console.log("yes page === products o feching");
@@ -124,22 +127,21 @@ const loadPage = async (page) => {
     }
   } catch (err) {
     console.warn(`${page} not found, redirecting to home.`);
-    history.replaceState(null, null, "/clothify/home");
+    history.replaceState(null, null, `${rootpath}/home`);
     loadPage("home");
   }
 };
 
 // Router
 const router = () => {
-  // ✅ remove "/clothify/" prefix
-  let path = location.pathname.replace("/clothify", "");
-  if (!path) path = "home"; // default
+  let path = location.pathname.replace(rootpath, "");
+  if (!path || path === "/") path = "home";
   loadPage(path);
 };
 
 // SPA navigation
 const navigateTo = (url) => {
-  history.pushState(null, null, `/clothify${url}`);
+  history.pushState(null, null, `${rootpath}${url}`);
   router();
 };
 
