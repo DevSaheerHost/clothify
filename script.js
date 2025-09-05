@@ -103,12 +103,11 @@ const renderCart = () => {
 
   cart.forEach((item, index) => {
     const itemTotal = item.price * item.quantity;
+    //const id = item.name.toLowerCase().replace(/\s+/g, "-");
     const cartItem = document.createElement("div");
     cartItem.className = "cart-item";
     cartItem.innerHTML = `
-    <a href="/product?id=${
-      item.id
-    }" data-page="product" data-link class="view-product-link">
+    <a href="/product?id=${item.id}" data-page="product" data-link class="view-product-link">
       <img src="${item.image}" alt="${
       item.name
     }" referrerpolicy="no-referrer" />
