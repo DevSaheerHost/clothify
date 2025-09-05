@@ -23,10 +23,10 @@ const fetchProducts = async () => {
   }
 };
 
-const changeImage = src =>{
+const changeImage = (src) => {
   const mainImg = document.getElementById("mainImg");
   mainImg.src = src;
-}
+};
 
 // Render products list
 const renderProducts = (products, container) => {
@@ -201,14 +201,19 @@ const loadPage = async (page) => {
               product.name
             }" referrerpolicy="no-referrer" />
             <div class="thumbnail-images" id="thumbnail-images">
-            ${product.thumbImages?.map(img=>
-              `<img
+            ${
+              product.thumbImages
+                ?.map(
+                  (img) =>
+                    `<img
                 src="${img}"
                 alt="Thumbnail 1"
                 class="thumbnail"
                 onclick="changeImage(this.src)"
             />`
-            ).join('') || ''}
+                )
+                .join("") || ""
+            }
             </div>
             <div class="product-info">
               <h2>${product.name}</h2>
@@ -252,11 +257,14 @@ const router = async () => {
   if (!path || path === "/") path = "home";
   loadPage(path);
 
-  if(location.href.includes("product?id=") && loadPage("product")){
-    const products = await fetchProducts()
-    renderProducts()
+  if (location.href.includes("product?id=") && loadPage("product")) {
+    const products = await fetchProducts();
+    renderProducts();
   }
-  
+
+  if (location.href.includes("products") && loadPage("products")) {
+    // ! Do not remove this code block, it is for while user hit back and the page is products,then load datas!!
+  }
 };
 
 // SPA navigation
@@ -323,9 +331,6 @@ document.body.addEventListener("input", (e) => {
 });
 
 //viewProduct({img:"https://stagmenfashion.com/media/web/products/ABD58D2D-5E9A-4373-8AD1-5F167E7FE05A.jpeg.672x1200_q85_crop.jpg", name: 'White Sneakers', price: 1299, description: "No data", id:"id"})
-
-
-
 
 // Back/forward support
 window.addEventListener("popstate", router);
