@@ -37,12 +37,11 @@ const renderProducts = (products, container) => {
   productsContainer.innerHTML = "";
 
   products.forEach((product) => {
+    const id = product.name.toLowerCase().replace(/\s+/g, "-");
     const productCard = document.createElement("li");
     productCard.className = "product-item";
     productCard.innerHTML = `
-    <a href="/product?id=${
-      product.id
-    }" data-page="product" data-link class="view-product-link">
+    <a href="/product?id=${id}.html" data-page="product" data-link class="view-product-link">
      
       <img src="${product.image}" alt="${product.name}" class="product-image" />
       </a>
@@ -103,11 +102,11 @@ const renderCart = () => {
 
   cart.forEach((item, index) => {
     const itemTotal = item.price * item.quantity;
-    //const id = item.name.toLowerCase().replace(/\s+/g, "-");
+    const id = item.name.toLowerCase().replace(/\s+/g, "-");
     const cartItem = document.createElement("div");
     cartItem.className = "cart-item";
     cartItem.innerHTML = `
-    <a href="/product?id=${item.id}" data-page="product" data-link class="view-product-link">
+    <a href="/product?id=${id}.html" data-page="product" data-link class="view-product-link">
       <img src="${item.image}" alt="${
       item.name
     }" referrerpolicy="no-referrer" />
@@ -154,14 +153,11 @@ const renderRelatedProducts = (products, product) => {
 
   try {
     relatedProducts.forEach((product) => {
-      console.log(product);
-
       const productCard = document.createElement("li");
+      const id = product.name.toLowerCase().replace(/\s+/g, "-");
       productCard.className = "product-item";
       productCard.innerHTML = `
-    <a href="/product?id=${
-      product.id
-    }" data-page="product" data-link class="view-product-link">
+    <a href="/product?id=${id}.html" data-page="product" data-link class="view-product-link">
      
       <img src="${product.image}" alt="${product.name}" class="product-image" />
       </a>
@@ -201,10 +197,17 @@ const loadPage = async (page) => {
     }
     if (page === "product") {
       const params = new URLSearchParams(location.search);
-      const id = params.get("id");
+      let id = params.get("id").replace(/\.html$/, "");
+      id = id.replace(/-/g, " ");
+      id = id.replace(/\b\w/g, (char) => char.toUpperCase());
+
       if (id) {
+        console.log("id : ", id == "Blue Jeans", id);
+
         const products = await fetchProducts();
-        const product = products.find((p) => p.id == id);
+        const product = products.find((p) => p.name == id);
+        //console.log(id);
+
         if (product) {
           const productContainer = $(".product-detail");
           if (productContainer) {
